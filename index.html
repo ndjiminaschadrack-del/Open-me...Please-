@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine's Surprise ❤️</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: Arial, sans-serif;
+      text-align: center;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      max-width: 420px;
+    }
+
+    h1 {
+      color: #e63946;
+      margin-bottom: 10px;
+    }
+
+    #countdown {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 25px;
+      font-weight: bold;
+    }
+
+    .buttons {
+      position: relative;
+      height: 160px;
+    }
+
+    #yesBtn {
+      font-size: 30px;
+      padding: 15px 45px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    #noBtn {
+      font-size: 12px;
+      padding: 6px 12px;
+      position: absolute;
+      background-color: #ccc;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .celebrate {
+      font-size: 42px;
+      animation: pop 1s infinite;
+    }
+
+    .sad {
+      font-size: 40px;
+      animation: shake 0.6s infinite;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-6px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="content">
+    <h1>Misia ❤️<br>Will you love to go out on Valentine’s Day?</h1>
+    <div id="countdown"></div>
+
+    <div class="buttons">
+      <button id="yesBtn">YES</button>
+      <button id="noBtn">no</button>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const content = document.getElementById("content");
+    const countdownEl = document.getElementById("countdown");
+
+    // NO button runs away
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 260;
+      const y = Math.random() * 120;
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    // If NO is clicked (sad ending)
+    noBtn.addEventListener("click", () => {
+      content.innerHTML = `
+        <h1>Oh no... 💔</h1>
+        <div class="sad">😢😭💔</div>
+        <p style="font-size:18px;">My heart is broken… but I still adore you ❤️</p>
+      `;
+    });
+
+    // YES celebration
+    yesBtn.addEventListener("click", () => {
+      content.innerHTML = `
+        <h1>YAYYYYY!!! 💖🥰🎉</h1>
+        <div class="celebrate">😍💃🎊💘✨</div>
+        <p style="font-size:20px;">Valentine’s Day is officially ours ❤️</p>
+      `;
+    });
+
+    // Countdown to Valentine's Day
+    function updateCountdown() {
+      const now = new Date();
+      let year = now.getFullYear();
+      let valentine = new Date(year, 1, 14); // Feb 14
+
+      if (now > valentine) {
+        valentine = new Date(year + 1, 1, 14);
+      }
+
+      const diff = valentine - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.textContent =
+        `⏳ Valentine’s Day in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+
+</body>
+</html>
